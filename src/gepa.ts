@@ -75,14 +75,17 @@ export class GEPA {
       const taskLMConfig = options.taskLM;
       if (typeof taskLMConfig === 'string') {
         if (!this.adapter) {
-          this.adapter = new DefaultAdapter({ model: taskLMConfig });
+          this.adapter = new DefaultAdapter({
+            model: taskLMConfig,
+            providerOptions: options.taskLMProviderOptions,
+          });
         }
         this.taskModelName = taskLMConfig;
       } else if (typeof taskLMConfig === 'function') {
         // Cannot introspect model name from function; adapter must handle task calls
       } else if (typeof taskLMConfig === 'object' && 'model' in taskLMConfig) {
         if (!this.adapter) {
-          const { model, apiKey, temperature, costEstimator, maxConcurrency, reflectOnAllTexts, ...passthrough } = taskLMConfig
+          const { model, apiKey, temperature, costEstimator, maxConcurrency, reflectOnAllTexts, providerOptions, ...passthrough } = taskLMConfig
           this.adapter = new DefaultAdapter({
             model,
             apiKey,
@@ -90,6 +93,7 @@ export class GEPA {
             costEstimator,
             maxConcurrency,
             reflectOnAllTexts,
+            providerOptions: options.taskLMProviderOptions ?? providerOptions,
             ...passthrough,
           });
         }
