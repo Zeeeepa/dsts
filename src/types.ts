@@ -122,6 +122,8 @@ export interface GEPAOptions {
   // Model configuration
   taskLM?: LanguageModelConfig;
   reflectionLM?: LanguageModelConfig;
+  // Provider-specific options for the task LM (passed to ai-sdk)
+  taskLMProviderOptions?: Record<string, any>;
   // Provider-specific options for the reflection LM (passed to ai-sdk)
   reflectionLMProviderOptions?: Record<string, any>;
   
